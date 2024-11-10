@@ -1,21 +1,26 @@
-from sqlalchemy import create_engine, Column, Integer, String, Text, Float
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+from make.database import Base
+from sqlalchemy import Boolean
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"  
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
-
-class Product(Base):
-    __tablename__ = "products"
+class Review(Base):
+    __tablename__ = "reviews"
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
-    category = Column(String)
-    subcategory = Column(String)
-    price = Column(Float)
-    description = Column(Text)
-    rating = Column(Float)
-    review = Column(Text)
+    product_name = Column(String, index=True)
+    brand = Column(String)
+    category = Column(String)  # Ex: "pele", "olhos", "boca"
+    subcategory = Column(String)  # Ex: "base", "batom"
+    rating = Column(Integer)
+    text = Column(String(280))
+    image_url = Column(String, nullable=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
 
-Base.metadata.create_all(bind=engine)
+    user = relationship("User")
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    email = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    is_active = Column(Boolean, default=True)

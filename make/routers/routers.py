@@ -1,48 +1,24 @@
-from fastapi import FastAPI, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from . import models
-from models import Product, SessionLocal
+from make import models, schemas, auth
+from ..database import get_db
 
-app = FastAPI()
+router = APIRouter()
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-@app.get("/products/")
-def search_products(
-    query: str = Query(None),
-    category: str = Query(None),
-    subcategory: str = Query(None),
-    sort_by: str = Query(None),
-    db: Session = Depends(get_db)
-):
-    query_filters = []
-    if query:
-        query_filters.append(Product.name.ilike(f"%{query}%"))
-    if category:
-        query_filters.append(Product.category == category)
-    if subcategory:
-        query_filters.append(Product.subcategory == subcategory)
-
-    products = db.query(Product).filter(*query_filters)
-
-    if sort_by == "price_asc":
-        products = products.order_by(Product.price)
-    elif sort_by == "price_desc":
-        products = products.order_by(Product.price.desc())
-    else:
-        products = products.order_by(Product.name)
-
-    return products.all()
-
-@app.post("/products/")
-def create_product(product: models.Product, db: Session = Depends(get_db)):
-    db.add(product)
+@router.post("/signup", response_model=schemas.UserResponse)
+def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    hashed_password = auth.get_password_hash(user.password)
+    db_user = models.User(username=user.username, email=user.email, hashed_password=hashed_password)
+    db.add(db_user)
     db.commit()
-    db.refresh(product)
-    return product
+    db.refresh(db_user)
+    return db_user
+
+@router.post("/login")
+def login_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    db_user = db.query(models.User).filter(models.User.username == user.username).first()
+    if not db_user or not auth.verify_password(user.password, db_user.hashed_password):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
+    access_token = auth.create_access_token(data={"sub": db_user.username})
+    return {"access_token": access_token, "token_type": "bearer"}
 

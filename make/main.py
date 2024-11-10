@@ -1,9 +1,12 @@
 from fastapi import FastAPI
-from routers import search
-from database import init_db
+from .database import engine, Base
+from .routers import routers, routers_review
+
+# Inicialize o banco de dados
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-init_db()
-
-app.include_router(search.router, prefix="/products")
+# Inclua os roteadores
+app.include_router(routers.router, prefix="/users", tags=["users"])
+app.include_router(routers_review.router, prefix="/reviews", tags=["reviews"])
