@@ -20,7 +20,7 @@ document.getElementById('signup-form').addEventListener('submit', function (even
     .then(data => {
         if (data.success) {
             alert('Conta criada com sucesso!');
-            window.location.href = '/login';  // Redireciona para a página de login
+            window.location.href = '/login';
         } else {
             alert('Erro ao criar conta. Tente novamente.');
         }
@@ -29,10 +29,4 @@ document.getElementById('signup-form').addEventListener('submit', function (even
         console.error('Erro:', error);
         alert('Ocorreu um erro. Tente novamente mais tarde.');
     });
-});
-
-// Redirecionar para a página de login ao clicar no link "Faça seu login"
-document.getElementById('login.html').addEventListener('click', function(event) {
-    event.preventDefault(); // Impede a navegação padrão
-    window.location.href = "/login"; // Redireciona para a página de login
 });
