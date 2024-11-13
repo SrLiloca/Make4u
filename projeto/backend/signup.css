@@ -1,0 +1,106 @@
+/* Reset de estilo básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo para o body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fce0f2; /* Cor de fundo suave */
+    color: #333; /* Cor do texto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda a tela */
+    margin: 0;
+}
+
+/* Estilo para o container do formulário */
+.signup-container {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 20px; /* Bordas bem arredondadas */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    width: 350px; /* Largura do formulário */
+    text-align: center;
+}
+
+/* Título principal */
+h2 {
+    color: #e91e63; /* Cor rosa */
+    margin-bottom: 20px;
+}
+
+/* Link para já tem cadastro? */
+.already-have-account {
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.already-have-account a {
+    color: #e91e63;
+    text-decoration: none;
+}
+
+.already-have-account a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo dos inputs e labels */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px; /* Bordas arredondadas */
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Estilo do botão */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #e91e63;
+    color: white;
+    border: none;
+    border-radius: 10px; /* Bordas arredondadas */
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #d81b60;
+}
+
+/* Estilo para o checkbox de exibir senha */
+.input-group input[type="checkbox"] {
+    margin-top: 10px;
+}
+
+/* Adicionando o alinhamento do texto */
+.text-center {
+    text-align: center;
+}
+
+/* Ajuste responsivo para telas pequenas */
+@media (max-width: 400px) {
+    .signup-container {
+        width: 280px; /* Reduzindo a largura para dispositivos pequenos */
+    }
+}
+
