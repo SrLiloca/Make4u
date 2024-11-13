@@ -1,38 +1,53 @@
-document.getElementById('signup-form').addEventListener('submit', function (event) {
-    event.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
+    const signupForm = document.getElementById('signup-form');
+    
+    // Verifica se o formulário foi encontrado
+    if (!signupForm) {
+        console.error("Formulário não encontrado!");
+        return;
+    }
 
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const email = document.getElementById('email').value;
+    signupForm.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    fetch('/users/signup', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: username,
-            password: password,
-            email: email
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Conta criada com sucesso!');
-            window.location.href = '/login';  // Redireciona para a página de login
-        } else {
-            alert('Erro ao criar conta. Tente novamente.');
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        if (!name || !email || !password) {
+            alert("Todos os campos são obrigatórios.");
+            return;
         }
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-        alert('Ocorreu um erro. Tente novamente mais tarde.');
-    });
-});
 
-// Redirecionar para a página de login ao clicar no link "Faça seu login"
-document.getElementById('login.html').addEventListener('click', function(event) {
-    event.preventDefault(); // Impede a navegação padrão
-    window.location.href = "/login"; // Redireciona para a página de login
+        // Envia a requisição para o backend
+        fetch('http://localhost:8000/signup', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                password: password,
+            }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Erro ao cadastrar usuário");
+            }
+            return response.json();  // Tenta obter o JSON
+        })
+        .then(data => {
+            if (data.success) {
+                alert("Cadastro realizado com sucesso!");
+                window.location.href = "/login";  // Redireciona para a página de login
+            } else {
+                alert("Erro ao cadastrar. Tente novamente.");
+            }
+        })
+        .catch(error => {
+            console.error("Erro:", error);
+            alert("Ocorreu um erro ao realizar o cadastro. Tente novamente mais tarde.");
+        });
+    });
 });

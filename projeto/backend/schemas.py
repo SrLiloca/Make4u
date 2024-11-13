@@ -21,12 +21,13 @@ class ReviewResponse(ReviewBase):
         orm_mode = True
 
 class UserBase(BaseModel):
-    username: str
+    name: str
     email: EmailStr
 
-class UserCreate(UserBase):
-    password: str
-
+class UserCreate(BaseModel):
+    name: str  
+    email: EmailStr  
+    password: str  
 class UserResponse(UserBase):
     id: int
     is_active: bool

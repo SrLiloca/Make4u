@@ -12,6 +12,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Base para os modelos
 Base = declarative_base()
+metadata = Base.metadata
 
 # Função para obter a sessão do banco
 def get_db():
