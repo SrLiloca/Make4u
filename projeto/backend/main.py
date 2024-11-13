@@ -9,12 +9,27 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+<<<<<<< HEAD
 app.add_middleware(
  CORSMiddleware,
     allow_origins=["*"],  # Lista de domínios permitidos
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],  # Métodos permitidos
     allow_headers=["Access-Control-Allow-Origin", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers"],  # Cabeçalhos permitidos
+=======
+origins = [
+    "http://localhost",  
+    "http://localhost:3000",  
+    "http://127.0.0.1:3000",  
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  
+    allow_credentials=True,
+    allow_methods=["*"],  
+    allow_headers=["*"],  
+>>>>>>> 85ac6157ab1e23eba03221561352181474c3f6f1
 )
 
 Base.metadata.create_all(bind=engine)

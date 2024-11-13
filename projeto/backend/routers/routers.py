@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from backend import models, schemas, auth
 from backend.database import get_db
+<<<<<<< HEAD
 from backend.auth import hash_password
 from pydantic import BaseModel
 from backend import models, database
@@ -23,6 +24,19 @@ def create_review(review: schemas.ReviewCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_review)
     return db_review
+=======
+from backend.auth import get_password_hash, create_user
+from backend.auth import hash_password
+from pydantic import BaseModel
+from backend import models, database
+
+router = APIRouter()
+
+class UserCreate(BaseModel):
+    name: str
+    email: str
+    password: str
+>>>>>>> 85ac6157ab1e23eba03221561352181474c3f6f1
 
 @router.post("/login")
 def login(user: schemas.UserCreate, db: Session = Depends(get_db)):
@@ -35,6 +49,7 @@ def login(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return {"access_token": access_token, "token_type": "bearer"}
 
 
+<<<<<<< HEAD
 @router.post("/signup", status_code=status.HTTP_201_CREATED)
 async def signup(user: UserCreate, db: Session = Depends(get_db)):
     # Verifique se o e-mail já existe
@@ -62,3 +77,26 @@ async def signup(user: UserCreate, db: Session = Depends(get_db)):
     db.refresh(new_user)
 
     return {"success": True, "message": "Usuário cadastrado com sucesso!"}
+=======
+@router.post("/signup")
+async def signup(user: UserCreate, db: Session = Depends(get_db)):
+    try:
+        # Criptografar a senha
+        hashed_password = hash_password(user.password)
+
+        # Criar um novo usuário
+        db_user = models.User(name=user.name, email=user.email, hashed_password=hashed_password)
+        
+        db.add(db_user)
+        db.commit()
+        db.refresh(db_user)
+        return {"success": True, "message": "Usuário cadastrado com sucesso!"}
+    
+    except Exception as e:
+        # Exibe o erro detalhado no log do servidor
+        print(f"Erro ao cadastrar usuário: {e}")
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Erro ao criar usuário: {e}")
+    finally:
+        db.close()
+>>>>>>> 85ac6157ab1e23eba03221561352181474c3f6f1

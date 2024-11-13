@@ -1,8 +1,13 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
+<<<<<<< HEAD
 from backend.database import Base
 from pydantic import BaseModel
 from backend.schemas import UserCreate
+=======
+from .database import Base
+from pydantic import BaseModel
+>>>>>>> 85ac6157ab1e23eba03221561352181474c3f6f1
 
 class Review(Base):
     __tablename__ = "reviews"
@@ -29,3 +34,11 @@ class User(Base):
     is_active = Column(Boolean, default=True)
 
     reviews = relationship("Review", back_populates="user")
+<<<<<<< HEAD
+=======
+
+class UserCreate(BaseModel):
+    name: str  # Adicionei o campo 'name' aqui
+    email: str
+    password: str
+>>>>>>> 85ac6157ab1e23eba03221561352181474c3f6f1
