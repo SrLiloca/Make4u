@@ -9,19 +9,10 @@ from backend import models, database
 
 router = APIRouter()
 
-
-
-@router.get("/reviews", response_model=list[schemas.ReviewResponse])
-def get_reviews(category: str, db: Session = Depends(get_db)):
-    return db.query(models.Review).filter(models.Review.category == category).all()
-
-@router.post("/reviews", response_model=schemas.ReviewResponse)
-def create_review(review: schemas.ReviewCreate, db: Session = Depends(get_db)):
-    db_review = models.Review(**review.dict())
-    db.add(db_review)
-    db.commit()
-    db.refresh(db_review)
-    return db_review
+class UserCreate(BaseModel):
+    name: str
+    email: str
+    password: str
 
 @router.post("/login")
 def login(user: schemas.UserCreate, db: Session = Depends(get_db)):
@@ -33,10 +24,6 @@ def login(user: schemas.UserCreate, db: Session = Depends(get_db)):
     access_token = auth.create_access_token(data={"sub": db_user.email})
     return {"access_token": access_token, "token_type": "bearer"}
 
-class UserCreate(BaseModel):
-    name: str
-    email: str
-    password: str
 
 @router.post("/signup")
 async def signup(user: UserCreate, db: Session = Depends(get_db)):

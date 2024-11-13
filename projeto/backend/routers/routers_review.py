@@ -16,5 +16,3 @@ def create_review(review: schemas.ReviewCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_review)
     return db_review
-
-
