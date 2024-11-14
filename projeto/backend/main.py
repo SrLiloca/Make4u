@@ -1,3 +1,4 @@
+from fastapi import Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 import os
@@ -11,9 +12,13 @@ from backend.models import User
 from backend.auth import hash_password
 from backend.schemas import UserCreate
 from fastapi.responses import HTMLResponse
+from backend.schemas import UserLogin
+from backend.auth import verify_password, create_access_token
+from pydantic import BaseModel, EmailStr
 
 app = FastAPI()
 app.include_router(routers.router)
+Base.metadata.create_all(bind=engine)
 
 app.add_middleware(
  CORSMiddleware,
@@ -23,15 +28,19 @@ app.add_middleware(
     allow_headers=["Access-Control-Allow-Origin", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers"],  # Cabeçalhos permitidos
 )
 
-Base.metadata.create_all(bind=engine)
-app.include_router(routers.router, prefix="/users", tags=["users"])
-
-
 app.mount("/static", StaticFiles(directory=os.path.dirname(__file__)), name="static")
 
 @app.get("/")
 async def get_homepage():
     return FileResponse(os.path.join(os.path.dirname(__file__), "login.html"))
+
+@app.get("/home")
+async def get_homepage():
+    file_path = os.path.join(os.path.dirname(__file__), "home.html")
+    if os.path.exists(file_path):
+        return FileResponse(file_path)
+    else:
+        return FileResponse(content="<h1>Página não encontrada</h1>", status_code=404)
 
 @app.get("/forgot-password")
 async def get_forgot_password_page():
@@ -86,3 +95,28 @@ async def signup(user: UserCreate, db: Session = Depends(get_db)):
     db.refresh(new_user)
 
     return {"success": True, "message": "Usuário cadastrado com sucesso!"}
+
+@app.post("/login")
+async def login(request: Request, user: UserLogin, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.email == user.email).first()
+
+    if not db_user or not verify_password(user.password, db_user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Credenciais inválidas"
+        )
+
+    body = await request.body()  # Log do corpo da solicitação
+    print("Corpo da solicitação recebido (bruto):", body)
+
+    try:
+        print("Dados recebidos (decodificados):", user.dict())
+    except Exception as e:
+        print("Erro ao decodificar dados:", e)
+        raise HTTPException(status_code=422, detail=f"Erro ao decodificar a solicitação: {str(e)}")
+
+    # Criação do token de acesso
+    access_token = create_access_token(data={"sub": db_user.email})
+    return {"access_token": access_token, "token_type": "bearer"}
+
+

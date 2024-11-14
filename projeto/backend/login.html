@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="/static/login.css">  <!-- Alterado para /static -->
@@ -11,8 +12,8 @@
         <h2>Entrar</h2>
         <form id="login-form">
             <div class="input-group">
-                <label for="username">Nome de usuário</label>
-                <input type="text" id="username" name="username" required>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
             </div>
             <div class="input-group">
                 <label for="password">Senha</label>
@@ -25,6 +26,7 @@
             <a href="/forgot-password">Esqueceu a senha?</a>
         </div>
     </div>
-    <script src="/static/login.js"></script>  <!-- Alterado para /static -->
+    <script src="/static/login.js" defer></script> 
 </body>
 </html>
+

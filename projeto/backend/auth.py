@@ -19,6 +19,7 @@ def hash_password(password: str) -> str:
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
+
 def get_password_hash(password):
     return pwd_context.hash(password)
 
@@ -30,7 +31,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 
 def create_user(db: Session, user: schemas.UserCreate):
     hashed_password = get_password_hash(user.password)
-    db_user = models.User(username=user.username, email=user.email, hashed_password=hashed_password)
+    db_user = models.User(name=user.name, email=user.email, hashed_password=hashed_password)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
