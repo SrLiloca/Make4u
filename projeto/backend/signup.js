@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
     signupForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
 
         if (!name || !email || !password) {
             alert("Todos os campos são obrigatórios.");
@@ -23,12 +23,12 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch('http://localhost:8000/signup', {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-            },
+                "Content-Type": "application/json; charset=UTF-8",
+    },
             body: JSON.stringify({
-                name: name,
-                email: email,
-                password: password,
+                name: "name",
+                email: "email",
+                password: "password",
             }),
         })
         .then(response => {

@@ -1,0 +1,116 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo do body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header */
+header {
+    background-color: #db9c9c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    color: white;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: #f8c0c0;
+    border-radius: 5px;
+}
+
+.menu-icon {
+    display: none; /* Para dispositivos móveis */
+}
+
+/* Hero Section */
+#hero {
+    background: url('projeto/backend/imagem1-Como-vender-maquiagem-1000x670-1.png') no-repeat center center;
+    background-size: cover;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.hero-content h1 {
+    font-size: 36px;
+}
+
+/* Services Section */
+#services {
+    background-color: white;
+    padding: 40px 20px;
+}
+
+.services-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.service-card {
+    background-color: #f0f0f0;
+    width: 250px;
+    text-align: center;
+    border-radius: 10px;
+    padding: 20px;
+    transition: transform 0.3s;
+}
+
+.service-card:hover {
+    transform: scale(1.05);
+}
+
+.service-card img {
+    width: 100px;
+    margin-top: 10px;
+}
+
+.service-card.rosto {
+    background-color: #f9c4d6;
+}
+
+.service-card.olhos {
+    background-color: #c7a8e4;
+}
+
+.service-card.boca {
+    background-color: #a8d6f4;
+}
+
+/* Footer */
+footer {
+    background-color: #db9c9c;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}

@@ -1,18 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from backend import models, schemas, auth
 from backend.database import get_db
-from backend.auth import get_password_hash, create_user
 from backend.auth import hash_password
-from pydantic import BaseModel
-from backend import models, database
+from backend import models
+from backend.schemas import UserCreate
 
 router = APIRouter()
-
-class UserCreate(BaseModel):
-    name: str
-    email: str
-    password: str
 
 @router.post("/login")
 def login(user: schemas.UserCreate, db: Session = Depends(get_db)):

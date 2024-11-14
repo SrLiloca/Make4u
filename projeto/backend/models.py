@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from .database import Base
 from pydantic import BaseModel
+from backend.schemas import UserCreate
 
 class Review(Base):
     __tablename__ = "reviews"
@@ -28,8 +29,3 @@ class User(Base):
     is_active = Column(Boolean, default=True)
 
     reviews = relationship("Review", back_populates="user")
-
-class UserCreate(BaseModel):
-    name: str  # Adicionei o campo 'name' aqui
-    email: str
-    password: str
