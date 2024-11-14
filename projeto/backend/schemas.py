@@ -22,11 +22,12 @@ class ReviewResponse(ReviewBase):
 
 class UserBase(BaseModel):
     name: str
-    email: EmailStr
+    email: str
 
 class UserCreate(BaseModel):
     name: str  
-    email: EmailStr  
+    email: str  
+    email: str
     password: str  
 class UserResponse(UserBase):
     id: int

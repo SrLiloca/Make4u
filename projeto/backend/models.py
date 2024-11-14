@@ -1,8 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
-from .database import Base
-from pydantic import BaseModel
-from backend.schemas import UserCreate
+from backend.database import Base
 
 class Review(Base):
     __tablename__ = "reviews"

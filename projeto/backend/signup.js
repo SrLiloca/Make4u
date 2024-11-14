@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const signupForm = document.getElementById('signup-form');
+    const signupForm = document.getElementById("signup-form");
     
     // Verifica se o formulário foi encontrado
     if (!signupForm) {
@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const name = document.getElementById("name").value;
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
+
 
         if (!name || !email || !password) {
             alert("Todos os campos são obrigatórios.");

@@ -18,7 +18,6 @@ def login(user: schemas.UserCreate, db: Session = Depends(get_db)):
     access_token = auth.create_access_token(data={"sub": db_user.email})
     return {"access_token": access_token, "token_type": "bearer"}
 
-
 @router.post("/signup")
 async def signup(user: UserCreate, db: Session = Depends(get_db)):
     try:
