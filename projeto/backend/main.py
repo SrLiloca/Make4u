@@ -15,10 +15,15 @@ from fastapi.responses import HTMLResponse
 from backend.schemas import UserLogin
 from backend.auth import verify_password, create_access_token
 from pydantic import BaseModel, EmailStr
+from passlib.context import CryptContext
 
 app = FastAPI()
 app.include_router(routers.router)
 Base.metadata.create_all(bind=engine)
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
 
 app.add_middleware(
  CORSMiddleware,
@@ -30,17 +35,14 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory=os.path.dirname(__file__)), name="static")
 
-@app.get("/")
-async def get_homepage():
-    return FileResponse(os.path.join(os.path.dirname(__file__), "login.html"))
 
-@app.get("/home")
+@app.get("/")
 async def get_homepage():
     file_path = os.path.join(os.path.dirname(__file__), "home.html")
     if os.path.exists(file_path):
         return FileResponse(file_path)
     else:
-        return FileResponse(content="<h1>Página não encontrada</h1>", status_code=404)
+        return HTMLResponse(content="<h1>Página não encontrada</h1>", status_code=404)
 
 @app.get("/forgot-password")
 async def get_forgot_password_page():

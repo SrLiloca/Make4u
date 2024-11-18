@@ -3,50 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Make4U - Página Principal</title>
-    <link rel="stylesheet" href="home.css"> <!-- Caminho atualizado -->
+    <title>Make4U</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .header {
+            background-color: #fce0f2;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #000;
+        }
+
+        .login-cadastro {
+            font-size: 16px;
+        }
+
+        .login-cadastro a {
+            margin-right: 15px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 40vh; /* Reduz a altura da imagem para que ela fique achatada */
+            object-fit: cover;
+        }
+
+        .category-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 10px 20px;
+            flex-grow: 1;
+            padding-bottom: 20px; /* Adiciona um espaço entre as categorias e o final da tela */
+        }
+
+        .category-box {
+            text-align: center;
+            padding: 10px; /* Diminui o padding */
+            width: 150px; /* Largura da caixa */
+            height: 200px; /* Altura diminuída */
+            border-radius: 8px;
+        }
+
+        .category-box img {
+            width: 200px; /* Aumenta o tamanho das imagens */
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .rosto, .olhos, .boca {
+            background-color: #e04695; /* Mantém a cor para as caixas */
+            color: #fff;
+            border-radius: 3; 
+        }
+
+        .olhos {
+            background-color: #a34ab6;
+        }
+
+        .boca {
+            background-color: #4a90e2;
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="logo">Make4U</div>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-            </ul>
-            <div class="menu-icon">☰</div>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section id="hero">
-        <div class="hero-content">
-            <h1>Explore os Produtos Make4U</h1>
+    <div class="header">
+        <h1>Make4U</h1>
+        <div class="login-cadastro">
+            <a href="/login">Login</a>
+            <a href="/signup">Cadastro</a>
+            <a href="/reviews">Review</a>
         </div>
-    </section>
+    </div>
 
-    <!-- Services -->
-    <section id="services">
-        <div class="services-container">
-            <div class="service-card rosto">
-                <h3>Rosto</h3>
-                <img src="/static/rosto.png" alt="Produto para o rosto">
-            </div>
-            <div class="service-card olhos">
-                <h3>Olhos</h3>
-                <img src="olhos.png" alt="Produto para os olhos">
-            </div>
-            <div class="service-card boca">
-                <h3>Boca</h3>
-                <img src="/static/boca.png" alt="Produto para a boca">
-            </div>
+    <img src="static/tela.png" alt="Imagem principal" class="main-image">
+
+    <div class="category-container">
+        <div class="category-box rosto">
+            <h2>Rosto</h2>
+            <img src="static/rosto.png" alt="Produto Rosto">
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Make4U. Todos os direitos reservados.</p>
-    </footer>
+        <div class="category-box olhos">
+            <h2>Olhos</h2>
+            <img src="static/olhos.png" alt="Produto Olhos">
+        </div>
+        <div class="category-box boca">
+            <h2>Boca</h2>
+            <img src="static/boca.png" alt="Produto Boca">
+        </div>  
+    </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
 
