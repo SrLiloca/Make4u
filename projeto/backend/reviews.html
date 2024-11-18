@@ -3,18 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reviews</title>
-    <link rel="stylesheet" href="/static/reviews.css">  <!-- Alterado para /static -->
+    <title>Make4U - Reviews</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #fce0f2;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #d28b91;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .sidebar h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #000;
+            padding: 5px;
+            border-radius: 5px;
+            background-color: #e8b4c8;
+            text-align: center;
+        }
+
+        .sidebar a:hover {
+            background-color: #f3c2d6;
+        }
+
+        .header {
+            background-color: #fce0f2;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #000;
+        }
+
+        .login-cadastro {
+            font-size: 16px;
+        }
+
+        .login-cadastro a {
+            margin-right: 15px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+            padding: 20px;
+            width: calc(100% - 200px);
+            overflow-y: auto;
+        }
+
+        .main-content h1 {
+            margin-bottom: 20px;
+        }
+
+        .review-box {
+            width: 80%;
+            background-color: #fff;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-box:hover {
+            background-color: #f3e0e8;
+            cursor: pointer;
+        }
+
+        .review-box p {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
-    <div class="reviews-container">
-        <h2>Veja as Avaliações</h2>
-        <!-- Aqui você pode colocar o conteúdo da página de reviews -->
-        <div id="reviews-list">
-            <!-- As avaliações serão carregadas aqui via JS -->
+    <div class="sidebar">
+        <h2>Rosto</h2>
+        <a href="#">Rosto</a>
+        <a href="#">Olhos</a>
+        <a href="#">Boca</a>
+    
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Make4U</h1>
+            <div class="login-cadastro">
+                <a href="/login">Login</a>
+                <a href="/signup">Cadastro</a>
+                <a href="/reviews">Review</a>
+                <a href="/">Home</a>
+            </div>
+        </div>
+        <h1>Review's</h1>
+        <div class="review-box">
+            <h3>Review 1</h3>
+            <p>Texto do review...</p>
+        </div>
+        <div class="review-box">
+            <h3>Review 2</h3>
+            <p>Texto do review...</p>
+        </div>
+        <div class="review-box">
+            <h3>Review 3</h3>
+            <p>Texto do review...</p>
+        </div>
+        <div class="review-box">
+            <h3>Review 4</h3>
+            <p>Texto do review...</p>
         </div>
     </div>
-    <script src="/static/reviews.js"></script>  <!-- Alterado para /static -->
 </body>
 </html>
 
