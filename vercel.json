@@ -1,0 +1,5 @@
+{
+    "rewrites": [
+      { "source": "/static/(.*)", "destination": "/static/$1" }
+    ]
+  }
