@@ -14,8 +14,11 @@ from backend.schemas import UserCreate
 from fastapi.responses import HTMLResponse
 from backend.schemas import UserLogin
 from backend.auth import verify_password, create_access_token
-from pydantic import BaseModel, EmailStr
+import json
 from passlib.context import CryptContext
+from backend.schemas import Review
+from pydantic import BaseModel
+from pathlib import Path
 
 app = FastAPI()
 app.include_router(routers.router)
@@ -35,8 +38,19 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory=os.path.dirname(__file__)), name="static")
 
+def load_reviews(filename):
+    path = Path(filename)
+    if path.is_file():
+        with open(filename, 'r', encoding='utf-8') as file:
+            return json.load(file)
+    return []
 
-@app.get("/")
+def save_reviews(filename, reviews):
+    with open(filename, 'w', encoding='utf-8') as file:
+        json.dump(reviews, file, indent=4)
+
+
+@app.get("/home")
 async def get_homepage():
     file_path = os.path.join(os.path.dirname(__file__), "home.html")
     if os.path.exists(file_path):
@@ -44,16 +58,92 @@ async def get_homepage():
     else:
         return HTMLResponse(content="<h1>Página não encontrada</h1>", status_code=404)
 
-@app.get("/forgot-password")
-async def get_forgot_password_page():
-    return FileResponse(os.path.join(os.path.dirname(__file__), "forgot-password.html"))
+@app.delete("/reviews/boca/{review_index}")
+async def delete_review_boca(review_index: int):
+    filename = 'reviews_boca.json'
+    reviews = load_reviews(filename)
+    if 0 <= review_index < len(reviews):
+        deleted_review = reviews.pop(review_index)
+        save_reviews(filename, reviews)
+        return {"message": "Review excluído com sucesso", "review": deleted_review}
+    else:
+        raise HTTPException(status_code=404, detail="Review não encontrado")
+
+@app.delete("/reviews/olhos/{review_index}")
+async def delete_review_olhos(review_index: int):
+    filename = 'reviews_olhos.json'
+    reviews = load_reviews(filename)
+    if 0 <= review_index < len(reviews):
+        deleted_review = reviews.pop(review_index)
+        save_reviews(filename, reviews)
+        return {"message": "Review excluído com sucesso", "review": deleted_review}
+    else:
+        raise HTTPException(status_code=404, detail="Review não encontrado")
+    
+@app.delete("/reviews/rosto/{review_index}")
+async def delete_review_rosto(review_index: int):
+    filename = 'reviews_rosto.json'
+    reviews = load_reviews(filename)
+    if 0 <= review_index < len(reviews):
+        deleted_review = reviews.pop(review_index)
+        save_reviews(filename, reviews)
+        return {"message": "Review excluído com sucesso", "review": deleted_review}
+    else:
+        raise HTTPException(status_code=404, detail="Review não encontrado")
+    
+@app.get("/rosto")
+async def get_rosto_page():
+    return FileResponse(os.path.join(os.path.dirname(__file__), "rosto.html"))
+
+@app.post("/reviews/rosto")
+async def add_review_rosto(review: Review):
+    filename = 'reviews_rosto.json'
+    reviews = load_reviews(filename)
+    reviews.append(review.dict())
+    save_reviews(filename, reviews)
+    return {"message": "Review de rosto adicionado com sucesso!"}
+
+@app.post("/reviews/olhos")
+async def add_review_olhos(review: Review):
+    filename = 'reviews_olhos.json'
+    reviews = load_reviews(filename)
+    reviews.append(review.dict())
+    save_reviews(filename, reviews)
+    return {"message": "Review de olhos adicionado com sucesso!"}
+
+@app.post("/reviews/boca")
+async def add_review_boca(review: Review):
+    filename = 'reviews_boca.json'
+    reviews = load_reviews(filename)
+    reviews.append(review.dict())
+    save_reviews(filename, reviews)
+    return {"message": "Review de boca adicionado com sucesso!"}
+
+@app.get("/reviews/rosto")
+async def get_reviews_rosto():
+    filename = 'reviews_rosto.json'
+    return load_reviews(filename)
+
+@app.get("/reviews/olhos")
+async def get_reviews_olhos():
+    filename = 'reviews_olhos.json'
+    return load_reviews(filename)
 
 
-@app.get("/reviews")
-async def get_reviews_page():
-    return FileResponse(os.path.join(os.path.dirname(__file__), "reviews.html"))
+@app.get("/reviews/boca")
+async def get_reviews_boca():
+    filename = 'reviews_boca.json'
+    return load_reviews(filename)
 
-@app.get("/login", response_class=HTMLResponse)
+@app.get("/olhos")
+async def get_olhos_page():
+    return FileResponse(os.path.join(os.path.dirname(__file__), "olhos.html"))
+
+@app.get("/boca")
+async def get_boca_page():
+    return FileResponse(os.path.join(os.path.dirname(__file__), "boca.html"))
+
+@app.get("/", response_class=HTMLResponse)
 async def get_login():
     
     login_file_path = os.path.join(os.path.dirname(__file__), "login.html")
@@ -121,4 +211,6 @@ async def login(request: Request, user: UserLogin, db: Session = Depends(get_db)
     access_token = create_access_token(data={"sub": db_user.email})
     return {"access_token": access_token, "token_type": "bearer"}
 
-
+@app.get("/forgot-password")
+async def get_forgot_password_page():
+    return FileResponse(os.path.join(os.path.dirname(__file__), "forgot-password.html"))

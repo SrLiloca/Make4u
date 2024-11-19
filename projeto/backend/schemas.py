@@ -40,3 +40,8 @@ class UserResponse(UserBase):
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+
+class Review(BaseModel):
+    marca: str
+    nota: int
+    texto: str

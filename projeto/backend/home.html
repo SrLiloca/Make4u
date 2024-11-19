@@ -40,7 +40,7 @@
 
         .main-image {
             width: 100%;
-            height: 40vh; /* Reduz a altura da imagem para que ela fique achatada */
+            height: 40vh; 
             object-fit: cover;
         }
 
@@ -49,25 +49,25 @@
             justify-content: space-around;
             margin: 10px 20px;
             flex-grow: 1;
-            padding-bottom: 20px; /* Adiciona um espaço entre as categorias e o final da tela */
+            padding-bottom: 20px; 
         }
 
         .category-box {
             text-align: center;
-            padding: 10px; /* Diminui o padding */
-            width: 150px; /* Largura da caixa */
-            height: 200px; /* Altura diminuída */
+            padding: 10px; 
+            width: 150px; 
+            height: 200px; 
             border-radius: 8px;
         }
 
         .category-box img {
-            width: 200px; /* Aumenta o tamanho das imagens */
+            width: 200px; 
             height: auto;
             margin-bottom: 10px;
         }
 
         .rosto, .olhos, .boca {
-            background-color: #e04695; /* Mantém a cor para as caixas */
+            background-color: #e04695; 
             color: #fff;
             border-radius: 3; 
         }
@@ -85,9 +85,7 @@
     <div class="header">
         <h1>Make4U</h1>
         <div class="login-cadastro">
-            <a href="/login">Login</a>
-            <a href="/signup">Cadastro</a>
-            <a href="/reviews">Review</a>
+            <a href="/">Login</a>
         </div>
     </div>
 
@@ -96,19 +94,27 @@
     <div class="category-container">
         <div class="category-box rosto">
             <h2>Rosto</h2>
-            <img src="static/rosto.png" alt="Produto Rosto">
+            <a href="/rosto">
+                <img src="static/rosto.png" alt="Produto Rosto">
+            </a>
         </div>
         <div class="category-box olhos">
             <h2>Olhos</h2>
-            <img src="static/olhos.png" alt="Produto Olhos">
+            <a href="/olhos">
+                <img src="static/olhos.png" alt="Produto Olhos">
+            </a>
         </div>
         <div class="category-box boca">
             <h2>Boca</h2>
-            <img src="static/boca.png" alt="Produto Boca">
+            <a href="/boca">
+                <img src="static/boca.png" alt="Produto Boca">
+            </a>
         </div>  
+    </div>
     </div>
 </body>
 </html>
+
 
 
 
