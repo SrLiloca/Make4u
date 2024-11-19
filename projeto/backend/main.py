@@ -144,9 +144,9 @@ async def get_boca_page():
     return FileResponse(os.path.join(os.path.dirname(__file__), "boca.html"))
 
 @app.get("/", response_class=HTMLResponse)
-async def get_login():
+async def get_index():
     
-    login_file_path = os.path.join(os.path.dirname(__file__), "login.html")
+    login_file_path = os.path.join(os.path.dirname(__file__), "index.html")
     
     try:
         
@@ -154,7 +154,7 @@ async def get_login():
             content = file.read()
         return HTMLResponse(content=content)
     except FileNotFoundError:
-        return HTMLResponse("Arquivo 'login.html' não encontrado.", status_code=404)
+        return HTMLResponse("Arquivo 'index.html' não encontrado.", status_code=404)
     
 @app.get("/signup", response_class=HTMLResponse)
 async def get_signup_page():
