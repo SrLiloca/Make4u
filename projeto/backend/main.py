@@ -2,7 +2,7 @@ from fastapi import Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 import os
-from backend.routers import routers
+from projeto.backend.routers import routers
 from backend.database import engine, Base
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException, Depends, status
