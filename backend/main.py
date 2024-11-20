@@ -28,6 +28,18 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+PERSISTENT_DIR = "/var/data/reviews"
+
+def get_file_path(filename):
+    return os.path.join(PERSISTENT_DIR, filename)
+
+def load_reviews(filename):
+    file_path = get_file_path(filename)
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
+
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
@@ -41,16 +53,11 @@ app.add_middleware(
 
 
 
-def load_reviews(filename):
-    path = Path(filename)
-    if path.is_file():
-        with open(filename, 'r', encoding='utf-8') as file:
-            return json.load(file)
-    return []
-
-def save_reviews(filename, reviews):
-    with open(filename, 'w', encoding='utf-8') as file:
-        json.dump(reviews, file, indent=4)
+def save_reviews(filename, data):
+    file_path = get_file_path(filename)
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)  
+    with open(file_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
 
 
 @app.get("/home", response_class=HTMLResponse)
@@ -96,43 +103,36 @@ async def render_rosto():
 
 @app.post("/reviews/rosto")
 async def add_review_rosto(review: Review):
-    filename = 'reviews_rosto.json'
-    reviews = load_reviews(filename)
+    reviews = load_reviews("reviews_rosto.json")
     reviews.append(review.dict())
-    save_reviews(filename, reviews)
+    save_reviews("reviews_rosto.json", reviews)
     return {"message": "Review de rosto adicionado com sucesso!"}
 
 @app.post("/reviews/olhos")
 async def add_review_olhos(review: Review):
-    filename = 'reviews_olhos.json'
-    reviews = load_reviews(filename)
+    reviews = load_reviews("reviews_olhos.json")
     reviews.append(review.dict())
-    save_reviews(filename, reviews)
+    save_reviews("reviews_olhos.json", reviews)
     return {"message": "Review de olhos adicionado com sucesso!"}
 
 @app.post("/reviews/boca")
 async def add_review_boca(review: Review):
-    filename = 'reviews_boca.json'
-    reviews = load_reviews(filename)
+    reviews = load_reviews("reviews_boca.json")
     reviews.append(review.dict())
-    save_reviews(filename, reviews)
+    save_reviews("reviews_boca.json", reviews)
     return {"message": "Review de boca adicionado com sucesso!"}
 
 @app.get("/reviews/rosto")
 async def get_reviews_rosto():
-    filename = 'reviews_rosto.json'
-    return load_reviews(filename)
+    return load_reviews("reviews_rosto.json")
 
 @app.get("/reviews/olhos")
 async def get_reviews_olhos():
-    filename = 'reviews_olhos.json'
-    return load_reviews(filename)
-
+    return load_reviews("reviews_olhos.json")
 
 @app.get("/reviews/boca")
 async def get_reviews_boca():
-    filename = 'reviews_boca.json'
-    return load_reviews(filename)
+    return load_reviews("reviews_boca.json")
 
 @app.get("/olhos", response_class=HTMLResponse)
 async def render_olhos():
