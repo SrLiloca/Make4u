@@ -1,7 +1,7 @@
 {
-    "typeCheckingMode": "basic",  // Define o nível de verificação de tipos (pode ser 'off', 'basic', ou 'strict')
-    "reportUndefinedVariable": "none",  // Desativa a verificação de variáveis indefinidas
+    "typeCheckingMode": "basic",  
+    "reportUndefinedVariable": "none",  
     "exclude": [
-        "**/Lib/os.py"  // Ignora a verificação do arquivo os.py
+        "**/Lib/os.py"  
     ]
 }
