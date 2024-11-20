@@ -1,6 +1,5 @@
 from fastapi import Request
 from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
 import os
 from backend.routers import routers
 from backend.database import engine, Base
@@ -20,12 +19,14 @@ from backend.schemas import Review
 from pydantic import BaseModel
 from pathlib import Path
 from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 app.include_router(routers.router)
 Base.metadata.create_all(bind=engine)
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
@@ -38,7 +39,7 @@ app.add_middleware(
     allow_headers=["Access-Control-Allow-Origin", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers"],  
 )
 
-app.mount("/static", StaticFiles(directory=os.path.dirname(__file__)), name="static")
+
 
 def load_reviews(filename):
     path = Path(filename)
