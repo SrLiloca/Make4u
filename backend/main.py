@@ -29,6 +29,7 @@ templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 PERSISTENT_DIR = "/var/data/reviews"
+os.makedirs(PERSISTENT_DIR, exist_ok=True)
 
 def get_file_path(filename):
     return os.path.join(PERSISTENT_DIR, filename)
@@ -55,7 +56,7 @@ app.add_middleware(
 
 def save_reviews(filename, data):
     file_path = get_file_path(filename)
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)  
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
