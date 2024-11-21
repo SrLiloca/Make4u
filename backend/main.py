@@ -77,7 +77,7 @@ async def render_homepage():
 
 @app.delete("/reviews/boca/{review_index}")
 async def delete_review_boca(review_index: int):
-    filename = 'reviews_boca.json'
+    filename = os.path.join(PERSISTENT_DIR, 'reviews_boca.json')
     reviews = load_reviews(filename)
     if 0 <= review_index < len(reviews):
         deleted_review = reviews.pop(review_index)
@@ -88,7 +88,7 @@ async def delete_review_boca(review_index: int):
 
 @app.delete("/reviews/olhos/{review_index}")
 async def delete_review_olhos(review_index: int):
-    filename = 'reviews_olhos.json'
+    filename = os.path.join(PERSISTENT_DIR, 'reviews_olhos.json')
     reviews = load_reviews(filename)
     if 0 <= review_index < len(reviews):
         deleted_review = reviews.pop(review_index)
@@ -96,10 +96,10 @@ async def delete_review_olhos(review_index: int):
         return {"message": "Review excluído com sucesso", "review": deleted_review}
     else:
         raise HTTPException(status_code=404, detail="Review não encontrado")
-    
+
 @app.delete("/reviews/rosto/{review_index}")
 async def delete_review_rosto(review_index: int):
-    filename = 'reviews_rosto.json'
+    filename = os.path.join(PERSISTENT_DIR, 'reviews_rosto.json')
     reviews = load_reviews(filename)
     if 0 <= review_index < len(reviews):
         deleted_review = reviews.pop(review_index)
