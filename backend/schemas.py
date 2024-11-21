@@ -44,5 +44,6 @@ class UserLogin(BaseModel):
 class Review(BaseModel):
     marca: str
     nota: int
-    texto: str 
+    texto: str = "Sem texto"
+
 

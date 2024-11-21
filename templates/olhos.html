@@ -168,7 +168,7 @@
             const nota = document.getElementById('nota').value;
             const texto = document.getElementById('texto').value;
 
-            const response = await fetch('http://localhost:8000/reviews/olhos', {
+            const response = await fetch('https://make4u.onrender.com/reviews/olhos', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -186,7 +186,7 @@
         });
 
         async function fetchReviews() {
-            const response = await fetch('http://localhost:8000/reviews/olhos');
+            const response = await fetch('https://make4u.onrender.com/reviews/olhos');
             if (response.ok) {
                 const reviews = await response.json();
                 const reviewsContainer = document.getElementById('reviews-container');
@@ -209,7 +209,7 @@
         }
 
         async function deleteReview(index) {
-            const response = await fetch(`http://localhost:8000/reviews/olhos/${index}`, {
+            const response = await fetch(`https://make4u.onrender.com/reviews/olhos/${index}`, {
                 method: 'DELETE',
             });
 
