@@ -52,6 +52,16 @@ app.add_middleware(
     allow_headers=["Access-Control-Allow-Origin", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers"],  
 )
 
+@app.get("/test-disk")
+def test_disk():
+    try:
+        os.makedirs(PERSISTENT_DIR, exist_ok=True)
+        test_file = os.path.join(PERSISTENT_DIR, "test.txt")
+        with open(test_file, "w") as f:
+            f.write("Teste de escrita bem-sucedido.")
+        return {"status": "success", "message": "Disco está acessível e funciona!"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 
 def save_reviews(filename, data):
